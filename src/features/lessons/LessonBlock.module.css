@@ -1,0 +1,176 @@
+.heading2 {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-6);
+}
+.heading3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: var(--space-5);
+}
+.heading4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: var(--space-4);
+}
+
+.text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+.text strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.codeBlock {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-raised);
+  overflow: hidden;
+}
+
+.codeCaption {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.codePre {
+  margin: 0;
+  padding: var(--space-4);
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.callout {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.tip {
+  border-color: color-mix(in srgb, var(--success) 35%, var(--border-default));
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+}
+.warning {
+  border-color: color-mix(in srgb, var(--warning) 35%, var(--border-default));
+  background: color-mix(in srgb, var(--warning) 8%, transparent);
+}
+.quote {
+  border-left: 3px solid var(--accent-primary);
+  border-radius: 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+.calloutLabel {
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.question {
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+.questionPrompt {
+  font-weight: 600;
+  font-size: 13.5px;
+  margin-bottom: var(--space-2);
+}
+.questionDiscussion {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.diagram {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--bg-surface-raised);
+}
+.diagramTitle {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+.diagramNodes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.diagramNode {
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  font-size: 12px;
+  font-weight: 600;
+}
+.diagramArrow {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+.diagramDescription {
+  margin-top: var(--space-3);
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.linkBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface-raised);
+}
+.linkBlockLabel {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--accent-primary);
+}
+.linkBlockDescription {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.realWorld {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  padding: var(--space-4);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent-violet) 6%, transparent),
+    transparent
+  );
+}
+.realWorldLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-violet);
+  margin-bottom: var(--space-2);
+}
+.realWorldTitle {
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: var(--space-1);
+}

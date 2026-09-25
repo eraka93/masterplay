@@ -1,0 +1,73 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 760px;
+}
+
+.breadcrumb {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+}
+
+.summary {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  margin-top: var(--space-2);
+}
+
+.metaRow {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  align-items: center;
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.actionsRow {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 120px;
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  resize: vertical;
+}
+
+.notesStatus {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+}
+
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.relatedLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-primary);
+}

@@ -1,0 +1,12 @@
+.glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-md);
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+}

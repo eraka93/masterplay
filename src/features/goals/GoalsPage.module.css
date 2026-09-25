@@ -1,0 +1,35 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.goalCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.goalTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goalTitle {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.goalMeta {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
