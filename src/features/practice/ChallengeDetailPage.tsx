@@ -43,7 +43,9 @@ export function ChallengeDetailPage() {
         userId: uid,
         startedAt: new Date().toISOString(),
         completedAt: new Date().toISOString(),
-        selectedApproachId: selectedApproachId ?? undefined,
+        // Firestore rejects `undefined` field values outright — omit the key entirely when no
+        // approach was picked, rather than writing selectedApproachId: undefined.
+        ...(selectedApproachId ? { selectedApproachId } : {}),
         matchedRecommended:
           challenge!.approaches.find((a) => a.id === selectedApproachId)?.recommended ?? false,
       },

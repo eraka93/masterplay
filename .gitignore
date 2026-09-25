@@ -23,6 +23,9 @@ coverage
 # PWA generated
 dev-dist
 
+# Firebase CLI local cache
+.firebase
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
