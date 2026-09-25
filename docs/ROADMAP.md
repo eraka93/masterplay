@@ -65,14 +65,21 @@ XP-over-time bar chart, skill matrix, recent quiz scores, streak/study-time stat
 small dependency-free `BarChart` component rather than a charting library, since the app's chart
 needs are simple bar/line views at this stage.
 
-## Phase 11 — Notifications 🚧
+## Phase 11 — Notifications ✅ (code), 🚧 (two manual Console/billing steps)
 
-**Not implemented**: an actual scheduled push (e.g. a Cloud Function checking "did this user study
-today by 14:00" and sending FCM). The client-side pieces (env var slots for FCM/VAPID config, and
-documentation of what's reliable vs. not on iOS PWAs) are in place — see `docs/LEARNING_SYSTEM.md`,
-"Reminders." Building the actual server-side scheduler was deliberately left undone rather than
-faked with a client-side timer that stops working the moment the app isn't open, per the product
-spec's explicit instruction not to fake background functionality.
+Fully implemented: permission-request UI (Profile page), FCM token registration
+(`src/services/notificationService.ts`), a scheduled Cloud Function
+(`functions/src/index.ts`) that checks once a day at 14:00 whether each user studied today and
+pushes a reminder if not, and both background (`src/sw.ts`) and foreground
+(`useForegroundNotifications`) delivery on the client. See `docs/LEARNING_SYSTEM.md`, "Reminders,"
+for the full flow.
+
+Two things remain that only the project owner can do, in the Firebase Console — not something
+committed code can complete on its own: generating a Web Push VAPID key, and enabling the Blaze
+billing plan (required for any scheduled function, regardless of actual usage staying free-tier).
+Until both are done, the UI degrades honestly (`'missing-vapid-key'` status) rather than failing
+silently, and `firebase deploy --only functions` fails with a clear billing-required error rather
+than partially deploying.
 
 ## Phase 12 — Advanced learning algorithms 🚧
 
@@ -97,7 +104,8 @@ recommendations).
   Firestore per collection. Deferring that behind a dynamic import (loaded only once
   `isFirebaseConfigured` is true) would shrink this further — a reasonable Phase 13 if bundle size
   becomes a real problem, not done preemptively for a personal-scale app.
-- **Push notification delivery**, per Phase 11 above.
+- **Push notification delivery is code-complete but not yet deployed/usable** — needs a VAPID key
+  and the Blaze plan enabled, per Phase 11 above.
 - **No dedicated study-session timer UI.** The `StudySession` model and repository exist
   (start/pause/resume/finish, associated with a lesson/challenge/topic), but there's no timer
   component wired up to them yet — study time shown on the Dashboard/Profile today is estimated

@@ -6,6 +6,7 @@ import type {
   EngineeringDecision,
   Goal,
   Note,
+  NotificationToken,
   QuizAttempt,
   RealWorldProblem,
   ReviewScheduleEntry,
@@ -57,6 +58,7 @@ export function createRepositories(uid: string) {
     engineeringDecisions: collectionRepo<EngineeringDecision>(uid, 'engineeringDecisions'),
     userAchievements: collectionRepo<UserAchievement & { id: string }>(uid, 'userAchievements'),
     reviewSchedule: collectionRepo<ReviewScheduleEntry>(uid, 'reviewSchedule'),
+    notificationTokens: collectionRepo<NotificationToken>(uid, 'notificationTokens'),
   }
 }
 

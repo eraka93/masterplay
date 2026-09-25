@@ -6,7 +6,9 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'dev-dist', 'coverage'] },
+  // functions/ is a separate npm project (own package.json, tsconfig, Node runtime target) with
+  // its own toolchain — see functions/package.json.
+  { ignores: ['dist', 'dev-dist', 'coverage', 'functions'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

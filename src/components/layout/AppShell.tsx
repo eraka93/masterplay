@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { OfflineBanner } from '@/components/ui/OfflineBanner'
 import { GlobalSearch } from '@/features/search/GlobalSearch'
+import { useForegroundNotifications } from '@/hooks/useForegroundNotifications'
 import { useIsDesktop } from '@/hooks/useMediaQuery'
 
 import styles from './AppShell.module.css'
@@ -14,6 +15,7 @@ import { TopBar } from './TopBar'
 export function AppShell() {
   const isDesktop = useIsDesktop()
   const [searchOpen, setSearchOpen] = useState(false)
+  useForegroundNotifications()
 
   return (
     <div className={styles.root}>

@@ -10,6 +10,16 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // injectManifest (a custom src/sw.ts), not the default generateSW — the service worker
+      // needs to also run Firebase Cloud Messaging's background handler (see src/sw.ts and
+      // docs/ARCHITECTURE.md, "Push notifications"), which generateSW's auto-generated worker
+      // has no hook for.
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
+      },
       includeAssets: ['favicon.svg', 'icons/*.png'],
       manifest: {
         name: 'MobileMastery',
@@ -38,19 +48,6 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
-          },
-        ],
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,woff2}'],
-        navigateFallbackDenylist: [/^\/__/],
-        runtimeCaching: [
-          {
-            // Never let the service worker cache Firestore responses — the Firestore SDK already
-            // has its own IndexedDB-backed offline write queue (see docs/ARCHITECTURE.md, "Offline
-            // behavior"); a second caching layer on top of it would just cause staleness bugs.
-            urlPattern: /^https:\/\/firestore\.googleapis\.com\//,
-            handler: 'NetworkOnly',
           },
         ],
       },

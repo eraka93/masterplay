@@ -7,6 +7,7 @@ import { StatTile, StatTileRow } from '@/components/ui/StatTile'
 import { LEARNING_PATHS_BY_ID } from '@/config/learningPaths'
 import { getLevelProgress } from '@/config/levels'
 import { SUBJECTS_BY_ID } from '@/config/subjects'
+import { StudyRemindersCard } from '@/features/notifications/StudyRemindersCard'
 import { useAuth } from '@/hooks/useAuth'
 import { useUserProfile } from '@/hooks/useUserProfile'
 import { formatMinutes } from '@/utils/date'
@@ -111,6 +112,8 @@ export function ProfilePage() {
           ))}
         </div>
       </Card>
+
+      <StudyRemindersCard />
 
       {isFirebaseConfigured ? (
         <Card>

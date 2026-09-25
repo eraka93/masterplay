@@ -18,7 +18,8 @@ service cloud.firestore {
 
       // Covers every per-user subcollection in one rule: profile/main, activities/*, goals/*,
       // notes/*, bookmarks/*, quizAttempts/*, challengeAttempts/*, realWorldProblems/*,
-      // engineeringDecisions/*, userAchievements/*, reviewSchedule/* (see repositories/index.ts).
+      // engineeringDecisions/*, userAchievements/*, reviewSchedule/*, notificationTokens/*
+      // (see repositories/index.ts).
       match /{collection}/{docId} {
         allow read, write: if isOwner(uid);
       }

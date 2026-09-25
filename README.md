@@ -38,6 +38,18 @@ activity, no Firebase project required. Open http://localhost:5173.
 
 To run against the Firebase emulator suite instead of a real project: `npm run emulators`.
 
+## Push notifications (optional)
+
+The 14:00 "you haven't studied today" reminder needs two things only doable from the Firebase
+Console, beyond the steps above — see [`docs/LEARNING_SYSTEM.md`](docs/LEARNING_SYSTEM.md),
+"Reminders," for the full explanation:
+
+1. A **Web Push certificate**: Project Settings → Cloud Messaging → Web configuration → generate a
+   key pair, then set `VITE_FIREBASE_VAPID_KEY` in `.env.local`.
+2. The **Blaze billing plan** enabled on the project (required for any scheduled Cloud Function).
+
+Then: `npm run functions:install` once, followed by `npm run functions:deploy`.
+
 ## Scripts
 
 | Script                                    | What it does                                             |
@@ -53,6 +65,8 @@ To run against the Firebase emulator suite instead of a real project: `npm run e
 | `npm run emulators`                       | Firebase local emulator suite (Auth, Firestore, Hosting) |
 | `npm run deploy`                          | Build and deploy to Firebase Hosting                     |
 | `npm run deploy:rules`                    | Deploy `firestore.rules` only                            |
+| `npm run functions:install`               | `npm install` inside `functions/`                        |
+| `npm run functions:deploy`                | Build and deploy the Cloud Functions (needs Blaze plan)  |
 
 ## iPhone Home Screen
 

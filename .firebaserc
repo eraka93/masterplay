@@ -2,6 +2,14 @@
   "projects": {
     "default": "masterplay-38b5d"
   },
-  "targets": {},
+  "targets": {
+    "masterplay-38b5d": {
+      "hosting": {
+        "masterplay": [
+          "masterplay"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

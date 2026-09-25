@@ -17,8 +17,10 @@
     "test:ui": "vitest --ui",
     "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
     "emulators": "firebase emulators:start",
-    "deploy": "npm run build && firebase deploy --only hosting",
-    "deploy:rules": "firebase deploy --only firestore:rules"
+    "deploy": "npm run build && firebase deploy --only hosting:masterplay",
+    "deploy:rules": "firebase deploy --only firestore:rules",
+    "functions:install": "npm --prefix functions install",
+    "functions:deploy": "firebase deploy --only functions"
   },
   "dependencies": {
     "firebase": "^12.19.0",
@@ -47,6 +49,9 @@
     "typescript-eslint": "^8.70.1",
     "vite": "^8.3.0",
     "vite-plugin-pwa": "^1.3.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "workbox-precaching": "^7.4.1",
+    "workbox-routing": "^7.4.1",
+    "workbox-strategies": "^7.4.1"
   }
 }

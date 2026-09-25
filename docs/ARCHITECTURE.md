@@ -102,6 +102,7 @@ users/{uid}
   engineeringDecisions/{id} — EngineeringDecision
   userAchievements/{id}   — UserAchievement (id == achievementId)
   reviewSchedule/{id}     — ReviewScheduleEntry (id == "{subjectId}:{topic}")
+  notificationTokens/{id} — NotificationToken (id == "device-{hash(token)}")
 ```
 
 Why this shape rather than top-level collections with a `userId` field:
@@ -193,8 +194,32 @@ limitations, documented rather than worked around:**
   support push for regular tabs) and requires iOS 16.4+.
 - No badge count API access from a web app on iOS.
 
-These constraints are why `docs/LEARNING_SYSTEM.md` describes the 14:00 reminder feature as "best
-effort, not guaranteed" rather than implementing a fake always-on background timer.
+These constraints are why the scheduling decision for the 14:00 reminder lives server-side (next
+section) rather than as a client-side timer.
+
+## Push notifications
+
+`vite-plugin-pwa` is configured with `strategies: 'injectManifest'` instead of its default
+`generateSW`, pointed at a custom `src/sw.ts` — this is the one thing that forced a departure from
+the auto-generated worker: Firebase Cloud Messaging's background handler needs to run *inside* the
+service worker, and `generateSW` gives no hook to add that. `src/sw.ts` does both jobs in one file:
+Workbox precaching/routing (the same `NetworkOnly` rule for Firestore as before), and
+`onBackgroundMessage` from the FCM Web SDK's `firebase/messaging/sw` entry point — a modular,
+ESM-native API meant specifically for this, so no `importScripts`/compat-SDK juggling is needed.
+`src/sw.ts` type-checks under its own project (`tsconfig.sw.json`, `lib: ["ES2023", "WebWorker"]`)
+since a service worker's global scope is incompatible with the DOM lib the rest of the app uses.
+
+The send side is a scheduled Cloud Function (`functions/`, a separate npm project with its own
+`package.json`/`tsconfig.json` — see `firebase.json`'s `functions` block). It runs once daily via
+Cloud Scheduler, not a polling loop with dedup bookkeeping, which is why there's no
+"already sent today" flag anywhere: the schedule itself guarantees at most one run per day. Per
+user, it checks `users/{uid}/activities` for a same-day entry and, if none exists, pushes to every
+token in `users/{uid}/notificationTokens` via the Admin SDK, pruning tokens Firebase reports as
+dead. This needed its own project (rather than living in `src/`) because Cloud Functions run in a
+Node.js environment with Admin SDK privileges no browser code should ever have.
+
+Two setup steps are Console/billing actions, not code — see `docs/LEARNING_SYSTEM.md`, "Reminders,"
+for exactly what's needed and how the app behaves before they're done.
 
 ## Testing strategy
 

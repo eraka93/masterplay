@@ -126,18 +126,45 @@ resolution behind two steps — investigation prompts, then possible approaches 
 which approach was actually taken and why, matching the spec's explicit instruction not to reveal
 the answer immediately.
 
-## Reminders (what's implemented vs. not)
+## Reminders
 
-The spec asks for a 14:00 "you haven't studied today" nudge. What's actually reliable on a PWA,
-especially on iOS, is narrower than a native app:
+The spec asks for a 14:00 "you haven't studied today" nudge. Doing this honestly on a PWA meant
+putting the actual decision logic server-side rather than in the browser tab, since nothing
+client-side can reliably wake up and check "did I study today" once the app is closed or the tab
+isn't open — a `setTimeout` in the page would silently stop working the moment the app isn't in
+the foreground, which is exactly what the spec's "do not fake background functionality"
+instruction rules out.
 
-- **Implemented:** the data model and hook points needed for a real reminder (Firebase Cloud
-  Messaging config surface in `.env.example`, the `VAPID` key slot) and the honest constraint that
-  Web Push on iOS only works after the app is added to the Home Screen, requires iOS 16.4+, and
-  cannot wake the app in the background to compute "have they studied today" — that check has to
-  happen server-side (e.g. a scheduled Cloud Function reading `activities`) and send the push, not
-  run client-side on a timer that stops the moment the tab or app is closed.
-- **Not implemented:** an actual Cloud Function/scheduler sending that push. This is flagged as a
-  concrete next step in `docs/ROADMAP.md` (Phase 11) rather than faked with a client-side
-  `setTimeout` that would silently stop working the moment the app isn't in the foreground — which
-  is exactly the "do not fake background functionality" instruction the spec calls out directly.
+**How it actually works:**
+
+1. The client (`src/features/notifications/StudyRemindersCard.tsx`, on the Profile page) requests
+   Notification permission and, once granted, registers the device for push
+   (`src/firebase/messaging.ts` → `requestNotificationToken`). The resulting FCM token is saved to
+   `users/{uid}/notificationTokens/{deviceId}` (`src/services/notificationService.ts`) — one doc
+   per browser/device, so a person can enable this on more than one device.
+2. A scheduled Cloud Function (`functions/src/index.ts`, `sendStudyReminders`) runs once a day at
+   14:00 (Europe/Belgrade by default — change `REMINDER_TIME_ZONE` in that file) using Cloud
+   Scheduler. For every registered user, it checks whether `users/{uid}/activities` has any entry
+   dated today; if not, it sends a push to every token on file via
+   `admin.messaging().sendEachForMulticast`, and prunes any token Firebase reports as no longer
+   valid (app uninstalled, permission revoked).
+3. The push is received by `src/sw.ts` while the app is backgrounded/closed (`onBackgroundMessage`,
+   using the FCM Web SDK's dedicated `firebase/messaging/sw` service-worker entry point — see
+   `docs/ARCHITECTURE.md`, "Push notifications"), or by `useForegroundNotifications`
+   (`src/hooks/useForegroundNotifications.ts`) if the app happens to be open at the time.
+
+**Two things only work after manual setup in the Firebase Console — not something this codebase
+can configure for you:**
+
+- A **Web Push certificate (VAPID key)** — Project Settings → Cloud Messaging → Web configuration
+  → generate a key pair, then set `VITE_FIREBASE_VAPID_KEY` in `.env.local`. Without it,
+  `enableStudyReminders` returns `'missing-vapid-key'` and the button explains that in the UI
+  rather than failing silently.
+- The **Blaze (pay-as-you-go) billing plan** — scheduled functions run on Cloud Scheduler + Pub/Sub,
+  which the free Spark plan doesn't support at all, regardless of actual usage staying inside the
+  free-tier quotas. `firebase deploy --only functions` (or `npm run functions:deploy`) will fail
+  with a clear billing-required error until this is enabled.
+
+**iOS constraints that remain true regardless of the above:** Web Push only works once the app has
+been added to the Home Screen (Safari doesn't support push for regular browser tabs), and requires
+iOS 16.4+.

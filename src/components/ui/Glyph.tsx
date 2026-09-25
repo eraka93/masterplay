@@ -1,3 +1,5 @@
+import { hashString } from '@/utils/hash'
+
 import styles from './Glyph.module.css'
 
 interface GlyphProps {
@@ -15,14 +17,6 @@ const PALETTE: [string, string][] = [
   ['#fb7185', '#fbbf24'],
   ['#34d399', '#3b82f6'],
 ]
-
-function hashString(value: string): number {
-  let hash = 0
-  for (let i = 0; i < value.length; i += 1) {
-    hash = (hash * 31 + value.charCodeAt(i)) >>> 0
-  }
-  return hash
-}
 
 /** A deterministic, dependency-free stand-in for a per-subject icon set (see ARCHITECTURE.md). */
 export function Glyph({ label, seed, size = 36 }: GlyphProps) {
