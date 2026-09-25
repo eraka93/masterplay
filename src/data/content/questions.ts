@@ -1,6 +1,120 @@
 import type { Question } from '@/models'
 
 export const QUESTIONS: Question[] = [
+  // --- React Native Fundamentals ---
+  {
+    id: 'q-react-native-runtime-1',
+    type: 'single-choice',
+    topic: 'react-native-runtime',
+    prompt:
+      'Which statement most accurately describes the responsibility of Hermes in a React Native application?',
+    options: [
+      {
+        id: 'a',
+        text: 'Hermes converts React Native components directly into Android Views and iOS UIViews.',
+      },
+      { id: 'b', text: 'Hermes is the JavaScript engine that executes application JavaScript.' },
+      { id: 'c', text: 'Hermes is the layout engine responsible for Flexbox calculations.' },
+      { id: 'd', text: 'Hermes is another name for the React Native New Architecture.' },
+    ],
+    correctOptionId: 'b',
+    explanation:
+      'Hermes is a JavaScript engine optimized for React Native workloads. It executes JavaScript and manages runtime concerns such as memory and garbage collection. Rendering native views, calculating layout and defining the overall React Native architecture are separate responsibilities.',
+  },
+  {
+    id: 'q-react-native-runtime-2',
+    type: 'true-false',
+    topic: 'react-rendering',
+    prompt:
+      'Every execution of a React function component necessarily causes its corresponding native views to be recreated.',
+    correctAnswer: false,
+    explanation:
+      'React can execute a component during the render phase without recreating every corresponding native view. Reconciliation determines the differences between the previous and next trees, and only relevant host changes are committed.',
+  },
+  {
+    id: 'q-react-native-runtime-3',
+    type: 'multiple-choice',
+    topic: 'react-native-host-components',
+    prompt: 'Which of the following are normally React Native host components?',
+    options: [
+      { id: 'a', text: 'View' },
+      { id: 'b', text: 'Text' },
+      { id: 'c', text: 'A custom ArticleCard function component' },
+      { id: 'd', text: 'TextInput' },
+    ],
+    correctOptionIds: ['a', 'b', 'd'],
+    explanation:
+      'View, Text and TextInput are host components understood by the React Native renderer and backed by platform UI infrastructure. ArticleCard is an application-level React component whose output eventually resolves into host components.',
+  },
+  {
+    id: 'q-react-native-runtime-4',
+    type: 'code',
+    topic: 'javascript-thread',
+    prompt: 'What is the primary performance problem with this event handler?',
+    language: 'tsx',
+    code: `const handlePress = async () => {
+  const result = expensiveCpuCalculation()
+  setResult(result)
+}`,
+    options: [
+      {
+        id: 'a',
+        text: 'Nothing. Declaring the function async guarantees that expensiveCpuCalculation runs on a background thread.',
+      },
+      {
+        id: 'b',
+        text: 'The CPU-heavy calculation can still synchronously block JavaScript execution.',
+      },
+      { id: 'c', text: 'setResult cannot be called from an async function.' },
+      {
+        id: 'd',
+        text: 'React Native automatically moves synchronous calculations to the UI thread.',
+      },
+    ],
+    correctOptionId: 'b',
+    explanation:
+      'The async keyword changes the function return semantics but does not automatically schedule synchronous CPU work on another thread. expensiveCpuCalculation still executes synchronously until it returns and can block the JavaScript runtime.',
+  },
+  {
+    id: 'q-react-native-runtime-5',
+    type: 'scenario',
+    topic: 'react-native-performance',
+    prompt:
+      'A screen becomes temporarily unresponsive whenever a large dataset is synchronously transformed immediately after a button press. Network latency is not involved. What should you investigate first?',
+    scenario:
+      'The transformation iterates over tens of thousands of records, performs sorting and multiple calculations, and completes in approximately 700 ms. During that interval, JavaScript-driven interactions stop responding.',
+    options: [
+      { id: 'a', text: 'Whether the synchronous computation is blocking the JavaScript runtime.' },
+      { id: 'b', text: 'Whether the Android XML layout has too many DOM nodes.' },
+      { id: 'c', text: 'Whether Firebase Hosting has excessive latency.' },
+      {
+        id: 'd',
+        text: 'Whether adding useCallback around the button handler fixes the computation.',
+      },
+    ],
+    correctOptionId: 'a',
+    explanation:
+      'A 700 ms synchronous CPU task is long enough to monopolize JavaScript execution and delay JavaScript-driven interactions. The first investigation should therefore focus on the computation itself and whether it can be reduced, chunked, moved or redesigned. Memoizing the handler does not change the cost of the computation.',
+  },
+  {
+    id: 'q-react-native-runtime-6',
+    type: 'single-choice',
+    topic: 'react-native-layout',
+    prompt: 'Why is it inaccurate to describe React Native styling as normal CSS?',
+    options: [
+      { id: 'a', text: 'React Native does not support any Flexbox concepts.' },
+      {
+        id: 'b',
+        text: 'React Native styles are JavaScript data consumed by the native layout/rendering system rather than rules interpreted by a browser CSS engine.',
+      },
+      { id: 'c', text: 'React Native converts every style object into an HTML style attribute.' },
+      { id: 'd', text: 'React Native styling only works on Android.' },
+    ],
+    correctOptionId: 'b',
+    explanation:
+      'React Native deliberately uses many CSS-like property names and Flexbox concepts, but there is no browser cascade or DOM/CSS rendering engine. Style data is interpreted by React Native and its native layout/rendering infrastructure.',
+  },
+
   // --- JS Event Loop ---
   {
     id: 'q-event-loop-1',

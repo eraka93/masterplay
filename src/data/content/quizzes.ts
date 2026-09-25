@@ -18,6 +18,21 @@ export const QUIZZES: Quiz[] = [
     passScorePercent: 70,
   },
   {
+    id: 'quiz-react-native-runtime-rendering',
+    lessonId: 'lesson-react-native-runtime-rendering',
+    subjectId: 'react-native-fundamentals',
+    title: 'React Native Runtime and Rendering',
+    questionIds: [
+      'q-react-native-runtime-1',
+      'q-react-native-runtime-2',
+      'q-react-native-runtime-3',
+      'q-react-native-runtime-4',
+      'q-react-native-runtime-5',
+      'q-react-native-runtime-6',
+    ],
+    passScorePercent: 75,
+  },
+  {
     id: 'quiz-jsi',
     lessonId: 'lesson-jsi',
     subjectId: 'jsi',

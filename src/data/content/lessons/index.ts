@@ -5,6 +5,7 @@ import { hermesLesson } from './hermes'
 import { javascriptEventLoopLesson } from './javascriptEventLoop'
 import { jsiLesson } from './jsi'
 import { reactNativeBridgeLesson } from './reactNativeBridge'
+import { reactNativeFundamentalsLesson } from './reactNativeFundamentals'
 import { reactNativePerformanceLesson } from './reactNativePerformance'
 import { reactReconciliationLesson } from './reactReconciliation'
 import { turboModulesLesson } from './turbomodules'
@@ -12,6 +13,7 @@ import { turboModulesLesson } from './turbomodules'
 export const LESSONS: Lesson[] = [
   javascriptEventLoopLesson,
   reactReconciliationLesson,
+  reactNativeFundamentalsLesson,
   reactNativeBridgeLesson,
   jsiLesson,
   hermesLesson,

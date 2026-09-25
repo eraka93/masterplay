@@ -201,7 +201,7 @@ section) rather than as a client-side timer.
 
 `vite-plugin-pwa` is configured with `strategies: 'injectManifest'` instead of its default
 `generateSW`, pointed at a custom `src/sw.ts` — this is the one thing that forced a departure from
-the auto-generated worker: Firebase Cloud Messaging's background handler needs to run *inside* the
+the auto-generated worker: Firebase Cloud Messaging's background handler needs to run _inside_ the
 service worker, and `generateSW` gives no hook to add that. `src/sw.ts` does both jobs in one file:
 Workbox precaching/routing (the same `NetworkOnly` rule for Firestore as before), and
 `onBackgroundMessage` from the FCM Web SDK's `firebase/messaging/sw` entry point — a modular,

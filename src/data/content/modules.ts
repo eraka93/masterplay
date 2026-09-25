@@ -18,6 +18,15 @@ export const MODULES: Module[] = [
     lessonIds: ['lesson-react-reconciliation'],
   },
   {
+    id: 'module-react-native-runtime',
+    subjectId: 'react-native-fundamentals',
+    order: 1,
+    title: 'React Native Runtime Fundamentals',
+    description:
+      'Build the runtime mental model required to reason about React Native rendering, JavaScript execution, native views and performance before moving into Bridge, JSI and the New Architecture.',
+    lessonIds: ['lesson-react-native-runtime-rendering'],
+  },
+  {
     id: 'module-rn-architecture-classic',
     subjectId: 'react-native-architecture',
     order: 1,
